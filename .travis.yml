@@ -1,0 +1,23 @@
+language: scala
+env:
+  global:
+  - BINTRAY_REALM=Bintray API Realm
+  - BINTRAY_HOST=api.bintray.com
+  - BINTRAY_USER=rehei
+  - secure: LDx51z0dr0IZ9mIGyKPV9Cntj3vlybYSOsm94NFZ3lx0te0g4I//ZCPse0tx/Q5MZ3sRtKDj09jJ/5QQCD/VvSGcY4tY6pzP7O37+cbwHLIgOH1Db+6ITWdaYdxUREblnUOzEcIhscyjWlQrR6oJpIE3Oa8QjJGX14WyiIw6rb7otlo4xTTfuDqMzLwI1vUXPotade07iDu/5ZHN21Edb2U84ySL8fJ0pd6Zz9SZrY3k/TEAkyYOXbeg1BYMECvZJYgbUYwJS9lwjZ2Up71iO3Jg/yb8ORZIxU0QZK+4ef0MKqwXxWZYM3BQxpUGZHtx44sUXaiYmOt6T86+rYskHSdeAsc5WDujg0NLkvTUuaXy+wf+pv2oj+OWlElJcJJytw9JkVNk4FQOMzHIKqo2E11h47CVoeQ3L8Ye8Vv9nigNkfLms4Iq5joCkcWwBSSiYGOEA3RwiaxcpKjSjnYXTkhsVvoPQ4WMEblbxsJOO5sA+hjSbQqQxKHZ+K3/mH+2aXxbsXeKqEYgMuz6PvW7hd6SrxS2lI8/wrVOjNPYZJFIWyYnIJTRT1zAQHOObtDp+owMfjeNIMfH/BgMmW4N7ys3E/FA/radk5wTBnytC8CXHLR7qTICKinVsqAR6FqHJMfxITjpgmlUaAEtoObx96AZtTUUxCEou6vC7HlA0P0=
+script:
+- ./sbt -Dtag=${TRAVIS_TAG} ++$TRAVIS_SCALA_VERSION package
+deploy:
+- provider: releases
+  api_key:
+    secure: IjjuRDAgBjteoLWlxqml8t67hTBTWy3P5yt/qB1YR8r2AJVng7DAh0pAwJGpOyyuj/hPPM1tdNqv2VYUgzGuDnQRd49ga8I0Bgg24BSmRMtHyX28wyUyUrBYUeQyiSfPvHfEoKroGNGJpGmSq9k6VOPt2nzQjXbWg0Al7UlS33m81hNBLKrzgAJUt3yL2BRC5GfUugQRzg3PPEruhfeI5lHcqQGtgN/ZVceD8VQ2lLr/gnXLL+OJDKioBrYWToA5yqSZE7xjFnBqVDFNqroOkrCDCiw9GxBGzRXzo9lUhBCxU179k0QvmCJQjCZJA0TxGKu8JnW9jIwtTkGMdO88J/lgY7yIHRYhfjBQgKDMT4Bj39HWHTXbVv95ZjM81NPPoMVwh9HcUOSvglHqsugzhDkzSQvzS5zAWmStBwwxnr8f+uHtAtoIEutw7c9pwDFGqf2Birq5lFWmXkEuB3u41QBNh6mdHJWTQIha8LizNOLzt9VF6gFYVCNiYFBcQ0fn3zzbKiTMLhyK/MFuGF1bsiJsEJKR5ZFR533ImX9RNBzuLMxPRZZKJUIZ1Gj1Pn+C6cu4mWx/xfGVVBmm8bEsxK3xEA3fBCfvMvXxvbh+ofo0jgyOhxEgdRMC23fnBpogik0zaXWstZ3cXiblQaSyhHKx2HhLBU93iWBtl+x6a1U=
+  file: target/d3-utils-${TRAVIS_TAG}.jar
+  on:
+    tags: true
+    repo: rehei/d3-utils
+- provider: script
+  script: ./bintray.sh
+  on:
+    tags: true
+    repo: rehei/d3-utils
+
